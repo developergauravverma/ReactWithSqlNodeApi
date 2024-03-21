@@ -1,0 +1,18 @@
+body {
+  margin: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+  font-family: "Roboto !important";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.signupimg {
+  height: 75vh;
+  width: 640px;
+}
+
+.errorImg {
+  height: 40vh;
+  width: 700px;
+}
