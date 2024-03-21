@@ -5,7 +5,9 @@ const LandingPage = () => {
   return (
     <>
       <Carousel />
-      <div>LandingPage</div>
+      <h1 className="d-flex justify-content-center align-items-center">
+        This is my first react app with sql server
+      </h1>
     </>
   );
 };

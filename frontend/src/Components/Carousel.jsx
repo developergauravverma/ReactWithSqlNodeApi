@@ -1,4 +1,7 @@
 import React from "react";
+import img1 from "../Assets/Carousel/car1.jpg";
+import img2 from "../Assets/Carousel/car2.jpg";
+import img3 from "../Assets/Carousel/car3.jpg";
 
 const Carousel = () => {
   return (
@@ -10,13 +13,28 @@ const Carousel = () => {
       >
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img src="..." className="d-block w-100" alt="..." />
+            <img
+              src={img1}
+              className="d-block w-100"
+              alt="default"
+              style={{ height: "75vh" }}
+            />
           </div>
           <div className="carousel-item">
-            <img src="..." className="d-block w-100" alt="..." />
+            <img
+              src={img2}
+              className="d-block w-100"
+              alt="default"
+              style={{ height: "75vh" }}
+            />
           </div>
           <div className="carousel-item">
-            <img src="..." className="d-block w-100" alt="..." />
+            <img
+              src={img3}
+              className="d-block w-100"
+              alt="default"
+              style={{ height: "75vh" }}
+            />
           </div>
         </div>
         <button

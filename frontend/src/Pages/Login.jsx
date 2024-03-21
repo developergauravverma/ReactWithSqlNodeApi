@@ -3,11 +3,12 @@ import signUpImg from "../Assets/Images/SignUpImg.jpg";
 import { Col, Container, Form, Row, Button } from "react-bootstrap";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../Contexts/auth";
 
 const Login = () => {
   const navigation = useNavigate();
+  const location = useLocation();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -38,7 +39,7 @@ const Login = () => {
           user: res.data.allUser,
         });
         localStorage.setItem("auth", JSON.stringify(res.data.allUser));
-        navigation("/");
+        navigation(location.state || "/");
       } else {
         toast.error(res.data.message);
       }
