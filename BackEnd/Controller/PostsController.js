@@ -1,4 +1,8 @@
-import { getAllPosts, getLikeByPostId } from "../dbConfig/postsBAL.js";
+import {
+  getAllPosts,
+  getLikeByPostId,
+  checkIfLikedByUser,
+} from "../dbConfig/postsBAL.js";
 
 export const getAllPostsController = async (req, res) => {
   try {
@@ -26,6 +30,11 @@ export const likeCount = async (req, res) => {
         message: "Post like count",
         result,
       });
+    } else {
+      return res.send({
+        success: false,
+        message: "Post id is null or empty",
+      });
     }
   } catch (err) {
     console.log(err);
@@ -36,8 +45,17 @@ export const likeCount = async (req, res) => {
   }
 };
 
-export const getLikeByUserId = async (req, res) => {
+export const getLikeByUserIdC = async (req, res) => {
   try {
+    const { postId, userId } = req.body;
+    if (userId && postId) {
+      const result = await checkIfLikedByUser(userId, postId);
+      return res.send({
+        success: true,
+        message: "User like by post id",
+        result,
+      });
+    }
   } catch (err) {
     console.log(err);
     res.send({

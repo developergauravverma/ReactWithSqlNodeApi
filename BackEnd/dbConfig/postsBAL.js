@@ -24,3 +24,18 @@ export const getLikeByPostId = async (postId) => {
   }
   return postLikeCount;
 };
+
+export const checkIfLikedByUser = async (userId, postId) => {
+  let isLike = false;
+  try {
+    const result = await getDataFromDatabase(
+      "sp_IsLikeByUserId",
+      { userId: userId, postId: postId },
+      { userId: "int", postId: "int" }
+    );
+    return result.isLike;
+  } catch (err) {
+    console.log(err);
+  }
+  return isLike;
+};

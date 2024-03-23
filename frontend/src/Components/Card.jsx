@@ -1,13 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../Contexts/auth";
 
 const Card = ({ image, title, description, tags, id }) => {
+  // eslint-disable-next-line
+  const [auth, setAuth] = useAuth();
   const ImagePath = require(`../Assets/PostsImg/${image}`);
   const [postLikeCount, setPostLikeCount] = useState(0);
+  const [islike, setIsLike] = useState(false);
   debugger;
 
+  let userId = auth.user.Id;
+
   const fetchPostLikeCount = async (id) => {
-    let count = 0;
     try {
       let { data } = await axios.post(
         `${process.env.REACT_APP_API}/api/v1/posts/getLikeByPost`,
@@ -21,12 +26,30 @@ const Card = ({ image, title, description, tags, id }) => {
     } catch (err) {
       console.log(err);
     }
-    return count;
+  };
+
+  const fetchIsPostLike = async (userId, postId) => {
+    try {
+      let { data } = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/posts/getLikeByUserId`,
+        { userId: userId, postId: postId }
+      );
+      if (data.success) {
+        if (data.result) {
+          setIsLike(true);
+        } else {
+          setIsLike(false);
+        }
+      }
+    } catch (err) {
+      console.log("Error in Fetching Is Post Liked");
+    }
   };
 
   useEffect(() => {
+    fetchIsPostLike(userId, id);
     fetchPostLikeCount(id);
-  }, [id]);
+  }, [id, userId]);
 
   return (
     <>
@@ -39,7 +62,15 @@ const Card = ({ image, title, description, tags, id }) => {
             <p className="card-text">{tags}</p>
           </div>
           <div className="card-footer d-flex flex-row align-items-center m-1 p-1">
-            <i className="fa-solid fa-heart"></i>
+            {islike ? (
+              <>
+                <i className="fa-solid fa-heart"></i>
+              </>
+            ) : (
+              <>
+                <i className="fa-regular fa-heart"></i>
+              </>
+            )}
             <div>{postLikeCount}</div>
           </div>
         </div>
