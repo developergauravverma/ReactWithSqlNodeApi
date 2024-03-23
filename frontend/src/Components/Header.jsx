@@ -3,7 +3,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../Contexts/auth";
 
 const Header = () => {
-  debugger;
   const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
   const logout = () => {
@@ -15,7 +14,7 @@ const Header = () => {
     navigate("/login");
   };
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container-fluid">
         <button
           className="navbar-toggler"

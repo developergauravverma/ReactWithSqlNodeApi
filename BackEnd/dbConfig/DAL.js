@@ -18,8 +18,9 @@ export const getDataFromDatabase = async (
   }
 
   const result = await request.execute(procedureName);
+  const recordLength = result.recordset.length;
   await sql.close();
-  return result.recordset[0];
+  return recordLength > 1 ? result.recordsets[0] : result.recordset[0];
 };
 
 export const GETvalueByKey = (key, obj) => {

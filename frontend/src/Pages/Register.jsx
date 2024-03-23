@@ -50,7 +50,10 @@ const Register = () => {
       <Container>
         <Row>
           <Col>
-            <div className="d-flex justify-content-center flex-column flex-wrap align-items-center">
+            <div
+              className="d-flex justify-content-center flex-column flex-wrap align-items-center"
+              style={{ height: "78vh" }}
+            >
               <h3 className="mt-3">Register Form</h3>
               <Form className="col-lg-8">
                 <Form.Group className="mt-2">
