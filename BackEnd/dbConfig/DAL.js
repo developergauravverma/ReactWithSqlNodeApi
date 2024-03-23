@@ -15,6 +15,8 @@ export const getDataFromDatabase = async (
       request.input(key, sql.NVarChar, objParamWithKeyAndValue[key]);
     else if (type === "date")
       request.input(key, sql.Date, objParamWithKeyAndValue[key]);
+    else if (type === "int")
+      request.input(key, sql.Int, objParamWithKeyAndValue[key]);
   }
 
   const result = await request.execute(procedureName);

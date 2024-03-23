@@ -9,3 +9,18 @@ export const getAllPosts = async () => {
   }
   return posts;
 };
+
+export const getLikeByPostId = async (postId) => {
+  let postLikeCount = 0;
+  try {
+    postLikeCount = await getDataFromDatabase(
+      "sp_likeCount",
+      { postId: postId },
+      { postId: "int" }
+    );
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+  return postLikeCount;
+};
