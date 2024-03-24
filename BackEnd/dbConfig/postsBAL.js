@@ -33,7 +33,22 @@ export const checkIfLikedByUser = async (userId, postId) => {
       { userId: userId, postId: postId },
       { userId: "int", postId: "int" }
     );
-    return result.isLike;
+    isLike = result.isLike;
+  } catch (err) {
+    console.log(err);
+  }
+  return isLike;
+};
+
+export const createNewLike = async (postId, userId) => {
+  let isLike = false;
+  try {
+    const result = await getDataFromDatabase(
+      "sp_SaveLikeOnPost",
+      { userId: userId, postId: postId },
+      { userId: "int", postId: "int" }
+    );
+    isLike = result.isLike;
   } catch (err) {
     console.log(err);
   }

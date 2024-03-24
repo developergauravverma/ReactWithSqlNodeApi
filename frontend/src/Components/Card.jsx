@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../Contexts/auth";
+import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 
 const Card = ({ image, title, description, tags, id }) => {
   // eslint-disable-next-line
@@ -8,7 +9,6 @@ const Card = ({ image, title, description, tags, id }) => {
   const ImagePath = require(`../Assets/PostsImg/${image}`);
   const [postLikeCount, setPostLikeCount] = useState(0);
   const [islike, setIsLike] = useState(false);
-  debugger;
 
   let userId = auth.user.Id;
 
@@ -46,6 +46,24 @@ const Card = ({ image, title, description, tags, id }) => {
     }
   };
 
+  const likeUpdate = async (e) => {
+    debugger;
+    let userId = e.currentTarget.getAttribute("data-userid");
+    let postId = e.currentTarget.getAttribute("data-postid");
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_API}/api/v1/posts/saveLikeOnPost`,
+      { userId: userId, postId: postId }
+    );
+    if (data.success) {
+      setIsLike(data.newLike);
+      if (islike) {
+        setPostLikeCount(postLikeCount - 1);
+      } else {
+        setPostLikeCount(postLikeCount + 1);
+      }
+    }
+  };
+
   useEffect(() => {
     fetchIsPostLike(userId, id);
     fetchPostLikeCount(id);
@@ -64,11 +82,19 @@ const Card = ({ image, title, description, tags, id }) => {
           <div className="card-footer d-flex flex-row align-items-center m-1 p-1">
             {islike ? (
               <>
-                <i className="fa-solid fa-heart"></i>
+                <FcLike
+                  onClick={likeUpdate}
+                  data-userid={userId}
+                  data-postid={id}
+                />
               </>
             ) : (
               <>
-                <i className="fa-regular fa-heart"></i>
+                <FcLikePlaceholder
+                  onClick={likeUpdate}
+                  data-userid={userId}
+                  data-postid={id}
+                />
               </>
             )}
             <div>{postLikeCount}</div>

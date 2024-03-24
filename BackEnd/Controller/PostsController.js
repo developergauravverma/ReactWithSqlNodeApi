@@ -2,6 +2,7 @@ import {
   getAllPosts,
   getLikeByPostId,
   checkIfLikedByUser,
+  createNewLike,
 } from "../dbConfig/postsBAL.js";
 
 export const getAllPostsController = async (req, res) => {
@@ -54,6 +55,33 @@ export const getLikeByUserIdC = async (req, res) => {
         success: true,
         message: "User like by post id",
         result,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.send({
+      success: false,
+      message: "something went wrong",
+      err,
+    });
+  }
+};
+
+export const saveLikeOnPost = async (req, res) => {
+  try {
+    const { postId, userId } = req.body;
+    if (postId && userId) {
+      let newLike = await createNewLike(postId, userId);
+      res.send({
+        success: true,
+        message: "post User Like",
+        newLike,
+      });
+    } else {
+      res.send({
+        success: false,
+        message: "post Id and UserId are required!",
+        err,
       });
     }
   } catch (err) {
