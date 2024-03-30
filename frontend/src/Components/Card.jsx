@@ -65,8 +65,11 @@ const Card = ({ image, title, description, tags, id }) => {
   };
 
   useEffect(() => {
-    fetchIsPostLike(userId, id);
-    fetchPostLikeCount(id);
+    const data = async () => {
+      await fetchIsPostLike(userId, id);
+      await fetchPostLikeCount(id);
+    };
+    data();
   }, [id, userId]);
 
   return (
